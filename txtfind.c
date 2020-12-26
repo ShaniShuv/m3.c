@@ -1,17 +1,29 @@
 # include <stdio.h>
 # include <string.h>
-# include "find.h"
+# include "txtfind.h"
 # define LINE 256
 # define WORD 30
 
-
+int main()
+{
+	char s[WORD] = {0};
+	getWord(s);
+	char c = getchar();
+	if(c=='a')
+	{
+		print_lines(s);
+	}
+	else if(c=='b')
+	{
+		print_similar_words(s);
+	}
+}
 
 int getLine(char s[])
 {
 	char c = 0;
 	int i = 0;
 	int j = 0;
-	/**
 	while(i<LINE)
 	{
 		if(scanf("%c", &c)==1 && c!='\n')
@@ -25,32 +37,6 @@ int getLine(char s[])
 			i = LINE;
 		}
 	}
-	*/
-	
-	while(i<LINE)
-	{
-		if(scanf("%c", &c)==1 && c!='\n')
-		{
-			*(s+i)=c;
-			i++;
-		}
-		else
-		{
-			j = i;
-			i = LINE;
-		}
-	}
-	
-	/**
-	//test
-	for(int k=0; k<LINE; k++)
-	{
-		printf("%c, ", s[k]); 
-		
-	}	
-	
-	//eot
-	*/
 	*(s+j+1) = '\0';
 	return j;
 }
@@ -76,20 +62,7 @@ int getWord(char w[])
 		}
 	}
 	
-		*(w+j) = NULL;
-	/**
-	//  test
-	printf("the word is: ");
-	int k = 0;
-	while(w[k])
-	{
-		printf("%c", w[k]); 
-		k++;
-	}
-	printf("\n");
-	*/	
-
-
+	*(w+j) = '\0';
 	return j;
 
 }
@@ -102,7 +75,6 @@ int subString( char * str1, char * str2)
 	
 	if(l1<l2)
 	{
-		//printf("if(l1<l2)\n");
 		char * tempP = str1;
 		str1 = str2;
 		str2 = tempP;
@@ -114,7 +86,6 @@ int subString( char * str1, char * str2)
 	
 	while(i < l1-l2+1)
 	{
-		//printf("while(i < l1-l1)\n");
 		if(*(str1+i) == *(str2))
 		{
 			int j = 1, k = i+1;
@@ -122,7 +93,6 @@ int subString( char * str1, char * str2)
 			{
 				if(*(str1+k) == *(str2+j))
 				{
-					//printf("if(*(str1+k) == *(str2+j))\n");
 					k++;
 					j++;
 				}
@@ -133,7 +103,6 @@ int subString( char * str1, char * str2)
 			}
 			if(j==l2)
 			{
-				//printf("if(j==l2)\n");
 				return 1;
 			}
 		}
@@ -149,17 +118,13 @@ int similar(char *str1, char *str2, int n)
 	int i =0;
 	while(i < l1-l2+1)
 	{
-		//printf("while(i < l1-l1)\n");
 		if(*(str1+i) == *(str2))
 		{
-			//printf("%c, %c\n", *(str1+i), *(str2));
 			int j = 1, k = i+1, counter = 0;
 			while(j < l2 && counter<=n && k<l1)
 			{
 				if(*(str1+k) == *(str2+j))
 				{
-					//printf("if(*(str1+k) == *(str2+j))\n");
-					//printf("%c, %c\n", *(str1+k), *(str2+j));
 					k++;
 					j++;
 				}
@@ -171,7 +136,6 @@ int similar(char *str1, char *str2, int n)
 			}
 			if(k-counter==l2)
 			{
-				//printf("if(j==l2)\n");
 				return 1;
 			}
 		}
@@ -181,20 +145,13 @@ int similar(char *str1, char *str2, int n)
 	
 	
 }
-
-
-//works good
 void print_lines(char * str)
 {
 	char line[LINE] = {0};
-	//int print = 0;
-	//int i = j = 0;
-	//while(fgets(line, LINE, stdin))
 	while(getLine(line))
 	{
 		
 		if(subString(line, str))
-		//if(strstr(line, str))
 		{
 			printf("%s\n", line);
 		}
@@ -204,15 +161,9 @@ void print_lines(char * str)
 void print_similar_words(char * str)
 {
 	char word[WORD] = {0};
-	//int print = 0;
-	//int i = j = 0;
-	//while(fgets(line, LINE, stdin))
 	while(getWord(word))
 	{
-		//word = mystring\0;
-		//word = {0}\0;
 		if(similar(word, str, 1))
-		//if(strstr(line, str))
 		{
 			printf("%s\n", word);
 		}
