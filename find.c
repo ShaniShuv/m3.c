@@ -5,12 +5,28 @@
 # define WORD 30
 
 
-/**
+
 int getLine(char s[])
 {
 	char c = 0;
 	int i = 0;
 	int j = 0;
+	/**
+	while(i<LINE)
+	{
+		if(scanf("%c", &c)==1 && c!='\n')
+		{
+			*(s+i)=c;
+			i++;
+		}
+		else
+		{
+			j = i;
+			i = LINE;
+		}
+	}
+	*/
+	
 	while(i<LINE)
 	{
 		if(scanf("%c", &c)==1 && c!='\n')
@@ -26,21 +42,6 @@ int getLine(char s[])
 	}
 	
 	/**
-	while(i<LINE)
-	{
-		if(scanf("%c", &c)==1 && c!='\n')
-		{
-			*(s+i)=c;
-			i++;
-		}
-		else
-		{
-			j = i;
-			i = LINE;
-		}
-	}
-	///////////////////////////////**
-	
 	//test
 	for(int k=0; k<LINE; k++)
 	{
@@ -49,10 +50,11 @@ int getLine(char s[])
 	}	
 	
 	//eot
+	*/
 	*(s+j+1) = '\0';
 	return j;
 }
-*/
+
 int getWord(char w[])
 {
 	char c = 0;
@@ -75,6 +77,7 @@ int getWord(char w[])
 	}
 	
 		*(w+j) = NULL;
+	/**
 	//  test
 	printf("the word is: ");
 	int k = 0;
@@ -84,7 +87,7 @@ int getWord(char w[])
 		k++;
 	}
 	printf("\n");
-	
+	*/	
 
 
 	return j;
@@ -187,34 +190,17 @@ void print_lines(char * str)
 	//int print = 0;
 	//int i = j = 0;
 	//while(fgets(line, LINE, stdin))
-	while(*(line))
+	while(getLine(line))
 	{
 		
 		if(subString(line, str))
 		//if(strstr(line, str))
 		{
-			printf("%s", line);
+			printf("%s\n", line);
 		}
 	}
 }
-/**
-void print_lines(char * str)
-{
-	char line[LINE] = getLine;
-	//int print = 0;
-	//int i = j = 0;
-	//while(fgets(line, LINE, stdin))
-	while(*(line))
-	{
-		
-		if(subString(line, str))
-		//if(strstr(line, str))
-		{
-			printf("%s", line);
-		}
-	}
-}
-*/
+
 void print_similar_words(char * str)
 {
 	char word[WORD] = {0};
