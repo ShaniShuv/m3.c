@@ -2,17 +2,17 @@ FLAGS = -Wall -g
 
 all: isort txtfind
 
-sort.o: sort.c sort.h
-	gcc $(FLAGS) -c sort.c
+isort.o: isort.c isort.h
+	gcc $(FLAGS) -c isort.c
 
-isort: sort.o sort.h
-	gcc $(FLAGS) -o isort sort.o
+isort: isort.o isort.h
+	gcc $(FLAGS) -o isort isort.o
 	
-find.o: find.c find.h
-	gcc $(FLAGS) -c find.c
+txtfind.o: txtfind.c txtfind.h
+	gcc $(FLAGS) -c txtfind.c
 
-txtfind: find.o find.h
-	gcc $(FLAGS) -o txtfind find.o 
+txtfind: txtfind.o txtfind.h
+	gcc $(FLAGS) -o txtfind txtfind.o 
 
 	
 .PHONY: clean all
