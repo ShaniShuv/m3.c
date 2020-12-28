@@ -48,25 +48,26 @@ int insertion_sort(int* arr , int len)
 			}
 			if((*(arr+i)>*(arr+j)  || j==0) && temp <len )
 			{
-				printf("i = %d, arr[i] = %d \n  j = %d, arr[j] = %d \n temp = %d, arr[temp] = %d \n ", i, arr[i], j, arr[j], temp, arr[temp]);
+				//printf("i = %d, arr[i] = %d \n  j = %d, arr[j] = %d \n temp = %d, arr[temp] = %d \n ", i, arr[i], j, arr[j], temp, arr[temp]);
 				
 				for(int k=0; k<10; k++){
-					printf("%d, ", arr[k]); 
+					//printf("%d, ", arr[k]); 
 		
 				}
 				printf("\n");
 				int tempvalue = *(arr+i);
 				shift_element(arr+temp, i);
 				*(arr+temp) = tempvalue;
-				printf("i = %d, arr[i] = %d \n  j = %d, arr[j] = %d \n temp = %d, arr[temp] = %d \n ", i, arr[i], j, arr[j], temp, arr[temp]);
+				//printf("i = %d, arr[i] = %d \n  j = %d, arr[j] = %d \n temp = %d, arr[temp] = %d \n ", i, arr[i], j, arr[j], temp, arr[temp]);
 				j=-1;
+				/**
 				for(int k=0; k<10; k++){
 					printf("%d, ", arr[k]); 
 		
 				}
-				printf("\n\n\n");
+				printf("\n\n\n");*/
 				j=-1;
-				printf("\n");
+				//printf("\n");
 
 			}
 			j--;
