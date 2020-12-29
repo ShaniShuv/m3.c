@@ -1,31 +1,21 @@
-FLAGS = -Wall 
+FLAGS = -Wall -g
 
-all: mains maind libmyMath.a libmyMath.so
-mains: main.o libmyMath.a	
-	gcc $(FLAGS) -o mains main.o libmyMath.a
-		
-maind: main.o libmyMath.so
-	gcc $(FLAGS) -o maind main.o ./libmyMath.so
+all: isort txtfind
+
+isort.o: isort.c isort.h
+	gcc $(FLAGS) -c isort.c
+
+isort: isort.o isort.h
+	gcc $(FLAGS) -o isort isort.o
 	
-main.o: main.c myMath.h
-	gcc $(FLAGS) -c main.c
+txtfind.o: txtfind.c txtfind.h
+	gcc $(FLAGS) -c txtfind.c
 
-power.o: power.c myMath.h
-	gcc $(FLAGS) -c power.c
-basicMath.o: basicMath.c myMath.h
-	gcc $(FLAGS) -c basicMath.c
+txtfind: txtfind.o txtfind.h
+	gcc $(FLAGS) -o txtfind txtfind.o 
 
-mymaths: libmyMath.a 
-	
-libmyMath.a: power.o basicMath.o 
-	ar -rcs libmyMath.a power.o basicMath.o
-
-mymathd: libmyMath.so 
-
-libmyMath.so: power.o basicMath.o 
-	gcc $(FLAGS) -shared -o libmyMath.so power.o basicMath.o
 	
 .PHONY: clean all
 
 clean:
-	rm -f main *.o *.a *.so maind mains
+	rm -f *.o isort txtfind
