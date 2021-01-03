@@ -3,6 +3,7 @@
 # include "txtfind.h"
 # define LINE 256
 # define WORD 30
+int efo = 1;
 
 int main()
 {
@@ -20,6 +21,7 @@ int main()
 		print_similar_words(s);
 	}
 }
+
 // scan a line to a given char array
 int getLine(char s[])
 {
@@ -28,18 +30,24 @@ int getLine(char s[])
 	int j = 0;
 	while(i<LINE)
 	{
-		if(scanf("%c", &c)==1 && c!='\n' && c!=EOF)
+		efo = (scanf("%c", &c)!=EOF); 
+		if(c!='\n' && c!=EOF)
 		{
 			*(s+i)=c;
 			i++;
 		}
 		else
 		{
-			j = i;
+			j = i+1;
 			i = LINE;
 		}
+		if(c==EOF)
+		{
+			efo = 0;
+		}
+		
 	}
-	*(s+j+1) = '\0';
+	*(s+j-1) = '\0';
 	return j;
 }
 // scan a word to a given char array
@@ -49,9 +57,9 @@ int getWord(char w[])
 	int i = 0;
 	int j = 0;
 	
-	while(i<WORD)
+	while(i<WORD && efo)
 	{
-		scanf("%c", &c);
+		efo = (scanf("%c", &c)!=EOF);
 		if( c!='\n' && c!='\t' && c!=' ' && c!=EOF)
 		{
 			*(w+i)=c;
@@ -59,7 +67,7 @@ int getWord(char w[])
 		}
 		else
 		{
-			j = i;
+			j = i+1;
 			i = WORD;
 		}
 	}
@@ -115,45 +123,61 @@ int subString( char * str1, char * str2)
 // checks if two strings has less that n changes between them
 int similar(char *str1, char *str2, int n)
 {
+	int i = 0, j = 0;
+	int  counter = 0;
 	int l1 = strlen(str1);
 	int l2 = strlen(str2);
-	int i =0;
-	while(i < l1-l2+1)
+	
+	if(l1<l2)
 	{
-		if(*(str1+i) == *(str2))
+		char * tempP = str1;
+		str1 = str2;
+		str2 = tempP;
+		int tempL = l1;
+		l1 = l2;
+		l2 = tempL;
+	}
+	
+	
+	while(i < l1 && j<l2)
+	{
+	
+		if(*(str1+i) == *(str2+j))
 		{
-			int j = 1, k = i+1, counter = 0;
-			while(j < l2 && counter<=n && k<l1)
+			j++;
+		}
+		else
+		{
+			counter+=1;
+			if(counter>n)
 			{
-				if(*(str1+k) == *(str2+j))
-				{
-					k++;
-					j++;
-				}
-				else
-				{
-					counter++;
-					k++;
-				}
-			}
-			if(k-counter==l2)
-			{
-				return 1;
-			}
+				return 0;
+			}		
 		}
 		i++;
-	}	
-	return 0;
+	}
 	
+	if( i >= l1)
+	{
+		return l2-j+counter <= n;
+	}
+	else if( j >= l2)
+	{
+		return l1-i+counter <= n;
+	}
+	return j==l2; 
+	//j==l2 || l2-j+counter<=n;
 	
 }
 void print_lines(char * str)
 {
 	char line[LINE] = {0};
-	getLine(line);
-	getLine(line);
-	while(getLine(line))
+	//getLine(line);
+	//getLine(line);
+	while(efo && getLine(line))
 	{
+		
+		
 		if(subString(line, str))
 		{
 			printf("%s\n", line);
@@ -164,10 +188,22 @@ void print_lines(char * str)
 void print_similar_words(char * str)
 {
 	char word[WORD] = {0};
-	getWord(word);
-	getWord(word);
-	while(getWord(word))
+	//getWord(word);
+	//getWord(word);
+	while(efo)
 	{
+		// test
+		for(int i = 0; i<WORD; i++)
+		{
+			*(word+i) = '\0';
+		}
+		
+		
+		
+		getWord(word);
+		
+		
+		
 		if(similar(word, str, 1))
 		{
 			printf("%s\n", word);
